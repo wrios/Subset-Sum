@@ -1,0 +1,36 @@
+\subsection{Algoritmo}
+
+
+\begin{codebox}
+    \Procname{\proc{FB}(vec<int> C, int V, int i, int n) \quad\quad\quad\quad\quad\textcolor{red}{O($2^n$)}}
+    \li \If $i <= n$ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+        \Then
+            \Return $min(1+FB(C,V-C_{i},i+1,n),FB(C,V,i+1,n))$ \quad\quad\quad\quad\quad\quad\quad\quad
+        \End
+    \li \If $V = 0$ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+        \Then
+            \Return $0$ \quad\quad\quad\quad\quad\quad\quad\quad
+        \End
+    \li \If $i > n || V < 0 || v >0$ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+        \Then
+            \Return $min(1+FB(C,V-C_{i},i+1,n),FB(C,V,i+1,n))$ \quad\quad\quad\quad\quad\quad\quad\quad
+        \End
+
+    \end{codebox}
+\subsection{Correctitud}
+El algoritmo recorre todo el espacio de busqueda, lo \'unico que hace es guardar la mejor soluci\'on hasta el momento, y luego devuelve la soluci\'on que tiene o -1 si no encontr\'o soluci\'on.\\
+Es trivial que el algoritmo es correcto pues recorre todo el espacio de soluciones y solamente conserva las soluciones validas y se queda con la mejor.
+\subsection{Complejidad}
+El algoritmo se divide en dos casos, donde se llama recursivamente con un elemento menos.\\
+Definiendo la siguiente ecuaci\'on de recurrencia:\\
+$$
+T(n) = \left\{
+\begin{array}{cl}
+ \Theta (1) &\mbox{si
+} n = 1 \\
+2T(n)+1&\mbox{si } n > 1
+\end{array}\right.
+$$
+\\
+Como podemos ver, la recurrencia:\\ $T(n)= 2T(n-1) + 1 = 2(2T(n-1)+1)+1= ...= 2^{n-1}+ (n-1) = O(2^{n})$.\\
+Con lo cual tiene complejidad: $O(2^{n})$.\\

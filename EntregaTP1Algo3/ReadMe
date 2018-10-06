@@ -1,0 +1,3 @@
+Para compilar los algoritmo escribrir "make" en la consola.
+Para correr test, entrar a la carpeta tests, escribir "make" y se correran los test por default
+Dentro de la carpeta "tests" hay otra carpeta "plots" en la cual se encuentrar los .py para hacer los graficos

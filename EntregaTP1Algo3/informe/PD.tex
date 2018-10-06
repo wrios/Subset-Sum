@@ -1,0 +1,48 @@
+\subsection{principio del Optimalidad: para Subset Sum}
+Sea $S1$ la solucion optima usando $X_{1},...,X_{n-1}$, tal que sumen $V-X_{n}$\\
+Sea $S2$ la solucion optima usando $X_{1},...,X_{n-1}$, tal que sumen $V$\\
+Sea S = min(S1, S2), la solucion optima para el problema de n-elementos, entonces hay 2 opciones:\\
+Usar el n-esimo elementos, o no usarlo.\\
+Supongamos que $S$ no es solucion optima, como S no es optimo entonces existe S' tal que |S'|<|S|.\\
+\begin{itemize}
+    \item Caso $X_{n}$ pertenece a $S$: $|S'| < |S| = |S1|+1$, entonces $|S'|-1 < |S1|$, como $S1$ es el optimo para sumar $V-X_{n}$ usando $X_{1},...,X_{n-1}$ y $|S'-X_{n}|$ es un conjunto de elementos que suman $V-X_{n}$ y es menor que el optimo. Absurdo pues $S1$ es optimo.
+    \item Caso $X_{n}$ no pertenece a $S$: $|S'| < |S| = |S2|$. Absurdo pues $S2$ es el optimo para sumar V usando $X_{1},...,X_{n-1}$ 
+\end{itemize}
+Vimos en la introducci\'on que las soluciones de este problema pueden ser expresados mediante una secuencia de decisiones.\\
+Ahora para que ver cumple el principio de optimalidad definimos:
+
+ \begin{equation}
+     \label{eq:F-recursiva}
+     F(x) = \left\{
+	       \begin{array}{ll}
+		 0      & \mathrm{si\ }  C = \{\} \hspace{4mm} y\hspace{4mm} S = 0\\
+		 min(1+F(C-V_{n},S-valor(V_{n})),F(C-V_{n},S)) & \mathrm{si\ } n > 1 \\
+		 \infty     & \mathrm{si\ } C = \{\} \hspace{4mm} y \hspace{4mm} S < 0
+	       \end{array}
+	     \right.
+   \end{equation}
+Llamamos al problema \'optimo de resolver el problema original con un elemento menos(usando el n-esimo elemento y sin usar el n-esimo elemento que son los dos \'unicos casos), osea dos subproblemas \'optimos. Por lo tanto con esos dos subproblemas se puede armar el problema mas grande.\\
+Con lo cual, podemos usar Programaci\'on din\'amica para resolver el problema.
+
+\subsection{Algoritmo}
+\begin{codebox}
+    \Procname{\proc{FB}(vec$\<$int$\>$ C, int V, int i, int n) \textcolor{red}{O($2^n$)}}
+    \li \If $i <= n$ \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+        \Then
+    \li        \If $V == 0$ : \quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+                \Then
+    \li             \Return $0$ \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \li         \Else: 
+    \li                 \Return $Inf$\footnote{Si el algor\'itmo devulve un n\'umero mayor que $n$ significa que no existe soluci\'on} \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+                \End
+                \End
+
+    \li \Return min(FB($C$,$V$,$i+1$,$n$),$1 +$FB($C$, $V-C_{i}$, $i+1$, $n$)) \textcolor{red}{O($2^n$)}
+
+    \end{codebox}
+\subsection{Correctitud}
+Dado que subset-sum cumple el principio de optimalidad, se puede usar esa forma recursiva para poder calcular el valor optimo.\\
+Ahora veremos que el algoritmo devuelve lo mismo que la funcion.\\
+\subsection{Complejidad}
+La complejidad es f\'acil de deducir, se recorren dos array de cardinal V y se llama a la iteraci\'on n veces.\\
+Por lo tanto la complejidad es O(V*n)
