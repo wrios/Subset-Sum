@@ -32,7 +32,7 @@ for elem in matrix[1]:
 	matrix[2][i] = matrix[2][i]/x[i]
 	i = i+1
 plt.xlabel('V')
-plt.ylabel('tiempo (ns)')
+plt.ylabel('tiempo/V (ns)')
 plt.title('')
 plt.plot(x, matrix[0])
 plt.plot(x, matrix[1])

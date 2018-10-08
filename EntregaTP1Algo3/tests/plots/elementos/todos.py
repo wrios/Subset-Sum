@@ -17,7 +17,7 @@ import os.path
 import matplotlib.pylab as plt
 
 matrix = []
-x = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,35]
+x = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 
 with open(sys.argv[1]) as csvfile:
     reader = csv.reader(csvfile, quoting=csv.QUOTE_NONNUMERIC)
@@ -31,13 +31,13 @@ for elem in matrix[0]:
 	z.append(pow(2,x[i]))
 	i = i+1
 
-plt.xlabel('n')
-plt.ylabel('')
+plt.xlabel('i')
+plt.ylabel('logaritmo en base 2 del tiempo (ns)')
 plt.title('')
 plt.plot(x, np.log2(matrix[0]))
 plt.plot(x, np.log2(matrix[1]))
 plt.plot(x, np.log2(matrix[2]))
 plt.plot(x, np.log2(matrix[3]))
-plt.legend(['Factibilidad', 'Optimalidad','Fuerza Bruta','PD'],loc = 'upper left')
+plt.legend(['Fuerza Bruta','Factibilidad', 'Optimalidad','PD'],loc = 'lower right')
 plt.savefig('todos'+sys.argv[1]+'.png', format='png')
 plt.show()

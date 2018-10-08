@@ -7,7 +7,6 @@ using namespace std;
 int PodaFactibilidad(vector<int>& elems, int cant_total_elems, int ind, int objetivo, int cant_en_uso){
 	int con = cant_total_elems+1;
 	int sin = cant_total_elems+1;
-	if (objetivo == 0){return cant_en_uso;}
 	if (ind < cant_total_elems)
 	{
 		if (objetivo > 0){sin = PodaFactibilidad(elems, cant_total_elems, ind+1, objetivo, cant_en_uso);}
@@ -20,6 +19,7 @@ int PodaFactibilidad(vector<int>& elems, int cant_total_elems, int ind, int obje
 			return min(con,sin);
 		}
 	}
+	if (objetivo == 0){return cant_en_uso;}
 	return cant_total_elems+1;
 }
 int resolverFac(vector<int>& elems, int cant_total_elems, int ind, int objetivo, int cant_en_uso){

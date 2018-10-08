@@ -2,24 +2,35 @@
 
 
 \begin{codebox}
-    \Procname{\proc{FB}(vec<int> C, int V, int i, int n) \quad\quad\quad\quad\quad\textcolor{red}{O($2^n$)}}
-    \li \If $i <= n$ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \Procname{\proc{FB}(S, int V, int i, int n) \quad\quad\textcolor{green}{O($2^n$)}}
+    \li \If $i <= n:$ \quad\quad\textcolor{green}{O($1$)}
         \Then
-            \Return $min(1+FB(C,V-C_{i},i+1,n),FB(C,V,i+1,n))$ \quad\quad\quad\quad\quad\quad\quad\quad
+    \li   
+            \Return $min(1+FB(S,V-C_{i},i+1,n),FB(S,V,i+1,n))$
         \End
-    \li \If $V = 0$ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \li \If $V = 0:$ \quad\quad\textcolor{green}{O($1$)}
         \Then
-            \Return $0$ \quad\quad\quad\quad\quad\quad\quad\quad
+    \li        
+            \Return $0$
         \End
-    \li \If $i > n || V < 0 || v >0$ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
-        \Then
-            \Return $min(1+FB(C,V-C_{i},i+1,n),FB(C,V,i+1,n))$ \quad\quad\quad\quad\quad\quad\quad\quad
-        \End
+    \li     \Return $\infinity$
 
     \end{codebox}
+
+\begin{codebox}
+    \Procname{\proc{ResolverFB}(S, int V, int i, int n) \quad\quad\textcolor{green}{O($2^n$)}}
+    \li $sol \leftarrow FB(S,V,i+1,n)$
+    \li \If $sol = \infinity:$ \quad\quad\textcolor{green}{O($1$)}
+        \Then
+    \li   
+            \Return $-1$
+        \End
+    \li     \Return $sol$
+
+    \end{codebox}    
 \subsection{Correctitud}
 El algoritmo recorre todo el espacio de busqueda, lo \'unico que hace es guardar la mejor soluci\'on hasta el momento, y luego devuelve la soluci\'on que tiene o -1 si no encontr\'o soluci\'on.\\
-Es trivial que el algoritmo es correcto pues recorre todo el espacio de soluciones y solamente conserva las soluciones validas y se queda con la mejor.
+El algoritmo es correcto pues recorre todo el espacio de soluciones y solamente conserva las soluciones v\'alidas y se queda con la mejor.
 \subsection{Complejidad}
 El algoritmo se divide en dos casos, donde se llama recursivamente con un elemento menos.\\
 Definiendo la siguiente ecuaci\'on de recurrencia:\\

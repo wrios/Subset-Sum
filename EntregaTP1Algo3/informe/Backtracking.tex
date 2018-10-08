@@ -1,23 +1,36 @@
 \subsection{Factibilidad: recorrido siempre v\'alido}
 Una camino en el \'arbol del espacio de soluciones, es v\'alido, siempre y cuando la suma de sus elementos no exceda el valor objetivo.
-Con esto en mente, si encontramos un camino para el cual la suma de sus elementos es mayor al valor objetivo, al estar trabajando con enteros positivos, si seguimso agregando elementos la suma siempre exceder\'a el valor objetivo, por lo tanto cortamos esa rama del espacio de soluciones y seguimos por otra rama.\\
+Con esto en mente, si encontramos un camino para el cual la suma de sus elementos es mayor al valor objetivo, al estar trabajando con enteros positivos, si seguimos agregando elementos la suma siempre exceder\'a el valor objetivo, por lo tanto cortamos esa rama del espacio de soluciones y seguimos por otra rama.\\
 
 \subsubsection{Algoritmo}
 \begin{codebox}
-    \Procname{\proc{FB}(vec<int> C, int V, int i, int n) \textcolor{red}{O($2^n$)}}
-    \li \If $i <= n$ \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \Procname{\proc{Fac}($S$, $int$ $V$, $int$ $i$, $int$ $n$)\quad\quad\textcolor{green}{O($2^n$)}}
+    \li \If $i \leq n:$\quad\quad\textcolor{green}{O($1$)}
         \Then
-    \li        \If $V == 0$ : \quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \li     \If $V-S_{i} > 0:$\quad\quad\textcolor{green}{O($1$)}
                 \Then
-    \li             \Return $0$ \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
-    \li         \Else: 
-    \li                 \Return $Inf$\footnote{Si el algor\'itmo devulve un n\'umero mayor que $n$ significa que no existe soluci\'on} \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \li              \Return $min(Fac(S,V,i+1,n),1 +Fac(S, V-S_{i}, i+1, n))$
+                \End         
+    \li     \If $V = 0 :$\quad\quad\textcolor{green}{O($1$)}
+                \Then
+    \li             \Return $0$
                 \End
-                \End
-
-    \li \Return min(FB($C$,$V$,$i+1$,$n$),$1 +$FB($C$, $V-C_{i}$, $i+1$, $n$)) \textcolor{red}{O($2^n$)}
+            \End
+    \li \Return $\infinity$ 
 
     \end{codebox}
+
+\begin{codebox}
+    \Procname{\proc{ResolverFac}(S, int V, int i, int n) \quad\quad\textcolor{green}{O($2^n$)}}
+    \li $sol \leftarrow Fac(S,V,i+1,n)$
+    \li \If $sol = \infinity:$ \quad\quad\textcolor{green}{O($1$)}
+        \Then
+    \li   
+            \Return $-1$
+        \End
+    \li     \Return $sol$
+
+    \end{codebox}        
 \subsubsection{Correctitud}
 El algoritmo recorre solomente las ramas que tienen soluci\'on, con lo cual, llega a las mismas soluciones que Fuerza Bruta y lo \'unico que hace es quedarse con la mejor soluci\'on.
 \subsubsection{Complejidad}
@@ -31,34 +44,46 @@ T(n) = \left\{
 \end{array}\right.
 $$
 \\
-Con lo cual tiene complejidad: $O(2^{n})$.\\
-\newpage
-\subsection{Optimalidad: Recorrido siempre optimo}
+Con lo cual tiene complejidad en peor caso: $O(2^{n})$.\\
+\subsection{Optimalidad: Recorrido siempre \'optimo}
 Para nuestro problema, una soluci\'on es \'optima, si la cantidad de elementos de la soluci\'on es menor o igual que la cantidad de elementos para toda otra soluci\'on.\\
 Dado una rama del espacio de b\'usqueda definido por el recorrido, si la cantidad de elementos de la rama es mayor o igual a la cantidad de elementos de la mejor soluci\'on encontrada hasta el momento, entonces se poda esa rama.\\
-Dada, la poda solo corta las ramas con mayor o igual cantidad de elementos que pueden o no llegar a una soluci\'on\\
+La poda solo corta las ramas con mayor o igual cantidad de elementos que pueden o no llegar a una soluci\'on\\
 \subsubsection{Algoritmo}
 \begin{codebox}
-    \Procname{\proc{FB}(vec<int> C, int V, int i, int n) \textcolor{red}{O($2^n$)}}
-    \li \If $i <= n$ \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
-        \Then
-    \li        \If $V == 0$ : \quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
+    \Procname{\proc{Op}($S$, $int$ $V$, $int$ $i$, $int$ $n$, $int$ $cantidad$, $int$ $optActual$) \textcolor{green}{O($2^n$)}}
+    \li \If $i \leq n:$\quad\quad\textcolor{green}{O($1$)}
+            \Then
+    \li        \If $ cantidad < optActual:$
                 \Then
-    \li             \Return $0$ \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
-    \li         \Else: 
-    \li                 \Return $Inf$\footnote{Si el algor\'itmo devulve un n\'umero mayor que $n$ significa que no existe soluci\'on} \quad\quad\quad\quad\quad\quad\quad\textcolor{red}{O($1$)}
-                \End
-                \End
-
-    \li \Return min(FB($C$,$V$,$i+1$,$n$),$1 +$FB($C$, $V-C_{i}$, $i+1$, $n$)) \textcolor{red}{O($2^n$)}
+                \li $optActual \leftarrow cantidad$
+    \li             \Return $min(Op(S,V,i+1,n,cantidad,optActual),1 + Op(S, V-C_{i}, i+1, n, cantidad, optActual))$
+            \End
+    \li        \If $V = 0:$
+                \Then
+    \li             \Return $0$
+            \End
+        \End
+    \li \Return $\infinity$
 
     \end{codebox}
+    \begin{codebox}
+    \Procname{\proc{ResolverOp}(S, int V, int i, int n) \quad\quad\textcolor{green}{O($2^n$)}}
+    \li $sol \leftarrow Op(S,V,i+1,n)$
+    \li \If $sol = \infinity:$ \quad\quad\textcolor{green}{O($1$)}
+        \Then
+    \li   
+            \Return $-1$
+        \End
+    \li     \Return $sol$
+
+    \end{codebox}    
 \subsubsection{Correctitud}
 Supongamos que existe soluci\'on y el algoritmo no encuentra, el algoritmo no poda (hace Fuerza Bruta) hasta encontrar una soluci\'on, como no encuentra soluci\'on Fuerza Bruta no encuentra soluci\'on. \\
 Absurdo pues Fuerza Bruta explora todo el espacio de soluciones.\\
 Por lo tanto, si hay soluci\'on la encuentra.\\
 Supongamos que hay una soluci\'on \'optima $S$ de cardinal $k$ y el algoritmo no lo encuentra:\\
-Sea$ n = |S'|$ ($S'$ la soluci\'on retornada con cardinal $n$ y $n > k$), entonces antes de encontrar a $S'$, no habi\'a soluci\'on o la anterior soluci\'on tenia mayor cardinal.\\
+Sea$ n = |S'|$ ($S'$ la soluci\'on retornada con cardinal $n$ y $n > k$), entonces antes de encontrar a $S'$, no hab\'ia soluci\'on o la anterior soluci\'on tenia mayor cardinal.\\
 
 \begin{itemize}
 	\item Caso Sin Soluci\'on anterior: El algoritmo poda toda soluci\'on de cardinal $>= n$.
@@ -78,4 +103,4 @@ T(n) = \left\{
 \end{array}\right.
 $$
 \\
-Con lo cual tiene complejidad: $O(2^{n})$.\\
+Con lo cual tiene complejidad en peor caso: $O(2^{n})$.\\

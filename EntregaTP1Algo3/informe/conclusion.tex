@@ -1,4 +1,5 @@
-Los algoritmos de Backtracking no siempre siempre mejores que usar fuerza bruta.\\
-Programaci\'on din\'amica es bastante buena para valores chicos, pero logramos ver como crece r\'apidamente al incrementar el valor de la suma.\\
-Como Fuerza Bruta y los algoritmos de Backtraking no son afectados por el valor de la suma, para valores muy grandes estos algoritmos podr\'ian tener un mejor rendimiento.\\
-Para resolver este tipo de problema, primero hay que hacer un analisis del entorno donde se va a usar, para saber si hay una cota o no, luego de eso se elige el algoritmo para ser usado. Si hay cota y es chica en comparaci\'on con la suma, se usará PD, caso contrario alguno de los algoritmos exponenciales los cuales no resultaros ser muy diferentes.
+Se llego a ver que las podas y Programación dinámica son afectados por el sort de los elementos, y el valor de ellos.
+También que Programación dinámica es mas afectada por el valor objetivo, que por el sort de los elementos.\\
+Fuerza Bruta depende únicamente de la cantidad de items.\\
+La figura 5 muestra que a medida que el valor de los elementos es mas chico, las podas empeoran y se parecen cada vez mas a Fuerza Bruta.\\
+Para resolver este problema, Programación dinámica es el mejor de los 4 algoritmos si el valor objetivo es lo suficientemente chico para poder usarla. En cambio sí no lo es, se usaría Backtracking teniendo en cuenta el valor de los elementos y el previo ordenamiento de los mismos.\\

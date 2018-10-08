@@ -4,23 +4,33 @@
 
 using namespace std;
 
-
-uint PD(vector<uint>& elems , vector< vector<uint> >& Matrix, uint filas, uint columnas, uint maximoValor){
-	//cout << "filas: "<< Matrix.size() << " columnas: "<< (Matrix[0]).size() <<endl;
-	//cout << "filas: "<< filas << " columnas: "<< columnas <<endl;
+int PD(vector<int>& elems , vector< vector<int> >& Matrix, int filas, int columnas, int maximoValor){
 	if (filas < 0 || columnas < 0 || columnas > maximoValor || filas > maximoValor)
 	{
 		return maximoValor;
 	}
 	if (columnas == 0)
 	{
-		Matrix[filas][columnas] = 0;
+		return Matrix[filas][columnas];
 	}
 	if (Matrix[filas][columnas] == maximoValor)
 	{
 		Matrix[filas][columnas] = min(PD(elems,Matrix,filas-1,columnas,maximoValor),1+PD(elems,Matrix,filas-1,columnas-elems[filas],maximoValor));
+		if (Matrix[filas][columnas] == maximoValor)
+		{
+			Matrix[filas][columnas] = maximoValor+1;
+		}
 	}
 	return Matrix[filas][columnas];
+}
+
+int ResolverPD(vector<int>& elems , vector< vector<int> >& Matrix, int filas, int columnas, int maximoValor){
+	int res = PD(elems, Matrix, filas, columnas, maximoValor);
+	if (res == maximoValor+1)
+	{
+		return -1;
+	}
+	return res;
 }
 
 
@@ -32,7 +42,7 @@ int main()
 	int objetivo;
 	cin >> tam;
 	cin >> objetivo;
-	vector<uint> elems(tam);//tamaño objetivo?
+	vector<int> elems(tam);//tamaño objetivo?
 	int cantidad = 0;
 	int indice = 0;
 	int elem;
@@ -41,17 +51,16 @@ int main()
 		cin >> elem;
 		elems[i] = elem;
 	}
-	uint filas = tam-1;
-	uint columnas = objetivo;
-	uint maximoValor = objetivo+1;
-	vector< vector<uint> > Matrix(tam,vector<uint>(maximoValor,maximoValor));
+	int filas = tam-1;
+	int columnas = objetivo;
+	int maximoValor = objetivo+1;
+	vector< vector<int> > Matrix(tam,vector<int>(maximoValor,maximoValor));
 	for (int i = 0; i < tam; ++i)
 	{
 		Matrix[i][0] = 0;
 	}
-	uint res = PD(elems, Matrix, filas, columnas, maximoValor);
-	if (res == maximoValor){cout <<  -1 << endl;}
-	else{cout << res << endl;}
+	int res = ResolverPD(elems, Matrix, filas, columnas, maximoValor);
+	cout << res << endl;
 
 	return 0;
 }

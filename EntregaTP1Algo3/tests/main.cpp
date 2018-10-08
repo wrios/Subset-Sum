@@ -13,13 +13,13 @@
 using namespace std;
 int main()
 {	
-	vector<int> objetivos = {80000};
-	vector<int> cantidad_elementos = {30};
+	vector<int> objetivos = {800000};
+	vector<int> cantidad_elementos = {25};
 	bool correrFB = true;
 	bool correrFactibilidad = true;
 	bool correrOptimalidad = true;
 	bool correrPD = true;
-	int cantidad_de_iteraciones = 10;
+	int cantidad_de_iteraciones = 5;
 	for (int i = 0; i < objetivos.size(); ++i)
 	{
 		cout << "Corriendo casos de suma: " << objetivos[i] << endl;
@@ -40,7 +40,8 @@ int main()
 				for (int k = 0; k < cantidad_elementos[j]; ++k)
 				{
 					//ultima corrida con 7
-					elementos.push_back((rand() % (objetivos[i]+1))/pow(2,2));
+					//elementos.push_back(objetivos[i]);
+					elementos.push_back((rand() % (objetivos[i]+1))/16);
 				}
 				sort(elementos.begin(), elementos.end());
 				reverse(elementos.begin(), elementos.end());
